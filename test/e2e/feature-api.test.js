@@ -4,7 +4,7 @@ const { test } = require('ava');
 const { setupApp } = require('./helpers/test-helper');
 const logger = require('../../lib/logger');
 
-test.beforeEach(() =>  {
+test.beforeEach(() => {
     logger.setLevel('FATAL');
 });
 
@@ -43,7 +43,7 @@ test.serial('creates new feature toggle', async t => {
     const { request, destroy } = await setupApp('feature_api_serial');
     return request
         .post('/features')
-        .send({ name: 'com.test.feature', enabled: false, strategies: [{name: 'default'}] })
+        .send({ name: 'com.test.feature', enabled: false, strategies: [{ name: 'default' }] })
         .set('Content-Type', 'application/json')
         .expect(201)
         .then(destroy);
@@ -54,17 +54,15 @@ test.serial('creates new feature toggle with createdBy', async t => {
     logger.setLevel('FATAL');
     request
         .post('/features')
-        .send({ name: 'com.test.Username', enabled: false, strategies: [{name: 'default'}]  })
+        .send({ name: 'com.test.Username', enabled: false, strategies: [{ name: 'default' }] })
         .set('Cookie', ['username=ivaosthu'])
         .set('Content-Type', 'application/json')
-        .end(() => {
-            return request
+        .end(() => request
                 .get('/api/events')
                 .expect((res) => {
                     t.true(res.body.events[0].createdBy === 'ivaosthu');
                 })
-                .then(destroy);
-        });
+                .then(destroy));
 });
 
 test.serial('require new feature toggle to have a name', async t => {
@@ -93,7 +91,7 @@ test.serial('can change status of feature toggle that does exist', async t => {
     logger.setLevel('FATAL');
     return request
         .put('/features/featureY')
-        .send({ name: 'featureY', enabled: true, strategies: [{name: 'default'}] })
+        .send({ name: 'featureY', enabled: true, strategies: [{ name: 'default' }] })
         .set('Content-Type', 'application/json')
         .expect(200).then(destroy);
 });
@@ -142,7 +140,7 @@ test.serial('refuses to create a feature with an existing name', async t => {
 test.serial('refuses to validate a feature with an existing name', async t => {
     const { request, destroy } = await setupApp('feature_api_serial');
     return request
-        .post('/features-validate')
+        .post('/features/validate')
         .send({ name: 'featureX' })
         .set('Content-Type', 'application/json')
         .expect(403).then(destroy);

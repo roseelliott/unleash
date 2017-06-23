@@ -1,6 +1,6 @@
 'use strict';
 
-const test = require('ava');
+const { test } = require('ava');
 const store = require('./fixtures/store');
 const supertest = require('supertest');
 const logger = require('../../../lib/logger');
@@ -9,7 +9,7 @@ const getApp = require('../../../lib/app');
 const { EventEmitter } = require('events');
 const eventBus = new EventEmitter();
 
-test.beforeEach(() =>  {
+test.beforeEach(() => {
     logger.setLevel('FATAL');
 });
 

@@ -1,10 +1,10 @@
 'use strict';
 
-const test = require('ava');
+const { test } = require('ava');
 const { setupApp } = require('./helpers/test-helper');
 const logger = require('../../lib/logger');
 
-test.beforeEach(() =>  {
+test.beforeEach(() => {
     logger.setLevel('FATAL');
 });
 

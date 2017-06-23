@@ -1,6 +1,6 @@
 'use strict';
 
-const test = require('ava');
+const { test } = require('ava');
 const store = require('./fixtures/store');
 const supertest = require('supertest');
 const logger = require('../../../lib/logger');
@@ -9,7 +9,7 @@ const getApp = require('../../../lib/app');
 const { EventEmitter } = require('events');
 const eventBus = new EventEmitter();
 
-test.beforeEach(() =>  {
+test.beforeEach(() => {
     logger.setLevel('FATAL');
 });
 
@@ -26,41 +26,6 @@ function getSetup () {
         stores,
     };
 }
-
-test('should register client', () => {
-    const { request } = getSetup();
-    return request
-        .post('/api/client/register')
-        .send({
-            appName: 'demo',
-            instanceId: 'test',
-            strategies: ['default'],
-            started: Date.now(),
-            interval: 10,
-        })
-        .expect(202);
-});
-
-test('should require appName field', () => {
-    const { request } = getSetup();
-    return request
-        .post('/api/client/register')
-        .expect(400);
-});
-
-test('should require strategies field', () => {
-    const { request } = getSetup();
-    return request
-        .post('/api/client/register')
-        .send({
-            appName: 'demo',
-            instanceId: 'test',
-            // strategies: ['default'],
-            started: Date.now(),
-            interval: 10,
-        })
-        .expect(400);
-});
 
 test('should validate client metrics', () => {
     const { request } = getSetup();
@@ -90,7 +55,7 @@ test('should accept client metrics', () => {
 test('should return seen toggles even when there is nothing', t => {
     const { request } = getSetup();
     return request
-        .get('/api/client/seen-toggles')
+        .get('/api/admin/metrics/seen-toggles')
         .expect(200)
         .expect((res) => {
             t.true(res.body.length === 0);
@@ -108,13 +73,13 @@ test('should return list of seen-toggles per app', t => {
             stop: new Date(),
             toggles: {
                 toggleX: { yes: 123, no: 0 },
-                toggleY: { yes: 123, no: 0 }
+                toggleY: { yes: 123, no: 0 },
             },
         },
     });
 
     return request
-        .get('/api/client/seen-toggles')
+        .get('/api/admin/metrics/seen-toggles')
         .expect(200)
         .expect((res) => {
             const seenAppsWithToggles = res.body;
@@ -127,7 +92,7 @@ test('should return list of seen-toggles per app', t => {
 test('should return feature-toggles metrics even when there is nothing', t => {
     const { request } = getSetup();
     return request
-        .get('/api/client/metrics/feature-toggles')
+        .get('/api/admin/metrics/feature-toggles')
         .expect(200);
 });
 
@@ -148,7 +113,7 @@ test('should return metrics for all toggles', t => {
     });
 
     return request
-        .get('/api/client/metrics/feature-toggles')
+        .get('/api/admin/metrics/feature-toggles')
         .expect(200)
         .expect((res) => {
             const metrics = res.body;
@@ -160,7 +125,7 @@ test('should return metrics for all toggles', t => {
 test('should return list of client applications', t => {
     const { request } = getSetup();
     return request
-        .get('/api/client/applications')
+        .get('/api/admin/metrics/applications')
         .expect(200)
         .expect((res) => {
             t.true(res.body.applications.length === 0);

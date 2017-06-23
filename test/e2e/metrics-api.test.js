@@ -1,14 +1,15 @@
 'use strict';
-const test = require('ava');
+
+const { test } = require('ava');
 const { setupApp } = require('./helpers/test-helper');
 const logger = require('../../lib/logger');
 
-test.beforeEach(() =>  {
+test.beforeEach(() => {
     logger.setLevel('FATAL');
 });
 
 test.serial('should register client', async (t) => {
-    const { request, destroy  } = await setupApp('metrics_serial');
+    const { request, destroy } = await setupApp('metrics_serial');
     return request
         .post('/api/client/register')
         .send({
@@ -16,20 +17,20 @@ test.serial('should register client', async (t) => {
             instanceId: 'test',
             strategies: ['default'],
             started: Date.now(),
-            interval: 10
+            interval: 10,
         })
         .expect(202)
         .then(destroy);
 });
 
 test.serial('should allow client to register multiple times', async (t) => {
-    const { request, destroy  } = await setupApp('metrics_serial');
+    const { request, destroy } = await setupApp('metrics_serial');
     const clientRegistration = {
-            appName: 'multipleRegistration',
-            instanceId: 'test',
-            strategies: ['default', 'another'],
-            started: Date.now(),
-            interval: 10
+        appName: 'multipleRegistration',
+        instanceId: 'test',
+        strategies: ['default', 'another'],
+        started: Date.now(),
+        interval: 10,
     };
 
     return request
@@ -44,7 +45,7 @@ test.serial('should allow client to register multiple times', async (t) => {
 });
 
 test.serial('should accept client metrics', async t => {
-    const { request, destroy  } = await setupApp('metrics_serial');
+    const { request, destroy } = await setupApp('metrics_serial');
     return request
         .post('/api/client/metrics')
         .send({
@@ -53,15 +54,15 @@ test.serial('should accept client metrics', async t => {
             bucket: {
                 start: Date.now(),
                 stop: Date.now(),
-                toggles: {}
-            }
+                toggles: {},
+            },
         })
         .expect(202)
         .then(destroy);
 });
 
 test.serial('should get application details', async t => {
-    const { request, destroy  } = await setupApp('metrics_serial');
+    const { request, destroy } = await setupApp('metrics_serial');
     return request
         .get('/api/client/applications/demo-app-1')
         .expect('Content-Type', /json/)
@@ -74,7 +75,7 @@ test.serial('should get application details', async t => {
 });
 
 test.serial('should get list of applications', async t => {
-    const { request, destroy  } = await setupApp('metrics_serial');
+    const { request, destroy } = await setupApp('metrics_serial');
     return request
         .get('/api/client/applications')
         .expect('Content-Type', /json/)

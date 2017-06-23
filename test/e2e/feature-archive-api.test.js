@@ -1,10 +1,10 @@
 'use strict';
 
-const test = require('ava');
+const { test } = require('ava');
 const { setupApp } = require('./helpers/test-helper');
 const logger = require('../../lib/logger');
 
-test.beforeEach(() =>  {
+test.beforeEach(() => {
     logger.setLevel('FATAL');
 });
 
@@ -21,7 +21,7 @@ test.serial('returns three archived toggles', async t => {
 });
 
 test.serial('revives a feature by name', async t => {
-    const { request, destroy  } = await setupApp('archive_serial');
+    const { request, destroy } = await setupApp('archive_serial');
     return request
         .post('/api/archive/revive/featureArchivedX')
         .set('Content-Type', 'application/json')
@@ -30,7 +30,7 @@ test.serial('revives a feature by name', async t => {
 });
 
 test.serial('must set name when reviving toggle', async t => {
-    const { request, destroy  } = await setupApp('archive_serial');
+    const { request, destroy } = await setupApp('archive_serial');
     return request
         .post('/api/archive/revive/')
         .expect(404)

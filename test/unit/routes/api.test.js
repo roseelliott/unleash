@@ -1,6 +1,6 @@
 'use strict';
 
-const test = require('ava');
+const { test } = require('ava');
 const store = require('./fixtures/store');
 const supertest = require('supertest');
 const logger = require('../../../lib/logger');
@@ -35,7 +35,32 @@ test('should get api defintion', t => {
         .get(`${base}/api/`)
         .expect('Content-Type', /json/)
         .expect(200)
-        .expect((res) => {
-            t.true(res.body.links['feature-toggles'].uri === '/api/features');
+        .expect(res => {
+            t.truthy(res.body);
+            t.true(res.body.links['api-admin'].uri === '/api/admin');
+        });
+});
+
+test('should get admin api defintion', t => {
+    const { request, base } = getSetup();
+    return request
+        .get(`${base}/api/admin`)
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .expect(res => {
+            t.truthy(res.body);
+            t.true(res.body.links['feature-toggles'].uri === '/api/admin/features');
+        });
+});
+
+test('should get client api defintion', t => {
+    const { request, base } = getSetup();
+    return request
+        .get(`${base}/api/client`)
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .expect(res => {
+            t.truthy(res.body);
+            t.true(res.body.links['client-metrics'].uri === '/api/client/metrics');
         });
 });

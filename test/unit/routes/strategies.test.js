@@ -1,9 +1,10 @@
 'use strict';
 
-const test = require('ava');
+const { test } = require('ava');
 const store = require('./fixtures/store');
 const supertest = require('supertest');
 const getApp = require('../../../lib/app');
+const logger = require('../../../lib/logger');
 
 const { EventEmitter } = require('events');
 const eventBus = new EventEmitter();
@@ -24,11 +25,15 @@ function getSetup () {
     };
 }
 
+test.beforeEach(() => {
+    logger.setLevel('FATAL');
+});
+
 test('should add version numbers for /stategies', t => {
     const { request, base } = getSetup();
 
     return request
-        .get(`${base}/api/strategies`)
+        .get(`${base}/api/admin/strategies`)
         .expect('Content-Type', /json/)
         .expect(200)
         .expect((res) => {
@@ -40,7 +45,7 @@ test('should require a name when creating a new stratey', t => {
     const { request, base } = getSetup();
 
     return request
-        .post(`${base}/api/strategies`)
+        .post(`${base}/api/admin/strategies`)
         .send({})
         .expect(400)
         .expect((res) => {
@@ -52,7 +57,7 @@ test('should require parameters array when creating a new stratey', t => {
     const { request, base } = getSetup();
 
     return request
-        .post(`${base}/api/strategies`)
+        .post(`${base}/api/admin/strategies`)
         .send({ name: 'TestStrat' })
         .expect(400)
         .expect((res) => {
@@ -64,7 +69,7 @@ test('should create a new stratey with empty parameters', () => {
     const { request, base } = getSetup();
 
     return request
-        .post(`${base}/api/strategies`)
+        .post(`${base}/api/admin/strategies`)
         .send({ name: 'TestStrat', parameters: [] })
         .expect(201);
 });
@@ -74,7 +79,7 @@ test('should not be possible to override name', () => {
     strategyStore.addStrategy({ name: 'Testing', parameters: [] });
 
     return request
-        .post(`${base}/api/strategies`)
+        .post(`${base}/api/admin/strategies`)
         .send({ name: 'Testing', parameters: [] })
         .expect(403);
 });
@@ -85,7 +90,7 @@ test('should update strategy', () => {
     strategyStore.addStrategy({ name, parameters: [] });
 
     return request
-        .put(`${base}/api/strategies/${name}`)
+        .put(`${base}/api/admin/strategies/${name}`)
         .send({ name, parameters: [], description: 'added' })
         .expect(200);
 });
@@ -95,7 +100,7 @@ test('should not update uknown strategy', () => {
     const { request, base } = getSetup();
 
     return request
-        .put(`${base}/api/strategies/${name}`)
+        .put(`${base}/api/admin/strategies/${name}`)
         .send({ name, parameters: [], description: 'added' })
         .expect(404);
 });
@@ -106,7 +111,7 @@ test('should validate format when updating strategy', () => {
     strategyStore.addStrategy({ name, parameters: [] });
 
     return request
-        .put(`${base}/api/strategies/${name}`)
-        .send({  })
+        .put(`${base}/api/admin/strategies/${name}`)
+        .send({ })
         .expect(400);
 });
