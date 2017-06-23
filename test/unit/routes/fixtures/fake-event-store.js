@@ -1,7 +1,5 @@
 'use strict';
 
-module.exports = () => {
-    return {
-        store: () => Promise.resolve(),
-    };
-};
+module.exports = () => ({
+    store: () => Promise.resolve(),
+});

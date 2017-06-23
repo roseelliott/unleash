@@ -13,7 +13,7 @@ test.beforeEach(() => {
     logger.setLevel('FATAL');
 });
 
-function getSetup () {
+function getSetup() {
     const base = `/random${Math.round(Math.random() * 1000)}`;
     const stores = store.createStores();
     const app = getApp({
@@ -49,7 +49,9 @@ test('should get admin api defintion', t => {
         .expect(200)
         .expect(res => {
             t.truthy(res.body);
-            t.true(res.body.links['feature-toggles'].uri === '/api/admin/features');
+            t.true(
+                res.body.links['feature-toggles'].uri === '/api/admin/features'
+            );
         });
 });
 
@@ -61,6 +63,8 @@ test('should get client api defintion', t => {
         .expect(200)
         .expect(res => {
             t.truthy(res.body);
-            t.true(res.body.links['client-metrics'].uri === '/api/client/metrics');
+            t.true(
+                res.body.links['client-metrics'].uri === '/api/client/metrics'
+            );
         });
 });

@@ -8,9 +8,10 @@ test.beforeEach(() => {
     logger.setLevel('FATAL');
 });
 
-test('returns health good', async (t) => {
+test('returns health good', async t => {
     const { request, destroy } = await setupApp('health');
-    return request.get('/health')
+    return request
+        .get('/health')
         .expect('Content-Type', /json/)
         .expect(200)
         .expect('{"health":"GOOD"}')

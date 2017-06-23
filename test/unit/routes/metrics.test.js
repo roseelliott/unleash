@@ -13,7 +13,7 @@ test.beforeEach(() => {
     logger.setLevel('FATAL');
 });
 
-function getSetup () {
+function getSetup() {
     const stores = store.createStores();
     const app = getApp({
         baseUriPath: '',
@@ -34,7 +34,6 @@ test('should validate client metrics', () => {
         .send({ random: 'blush' })
         .expect(400);
 });
-
 
 test('should accept client metrics', () => {
     const { request } = getSetup();
@@ -57,7 +56,7 @@ test('should return seen toggles even when there is nothing', t => {
     return request
         .get('/api/admin/metrics/seen-toggles')
         .expect(200)
-        .expect((res) => {
+        .expect(res => {
             t.true(res.body.length === 0);
         });
 });
@@ -81,7 +80,7 @@ test('should return list of seen-toggles per app', t => {
     return request
         .get('/api/admin/metrics/seen-toggles')
         .expect(200)
-        .expect((res) => {
+        .expect(res => {
             const seenAppsWithToggles = res.body;
             t.true(seenAppsWithToggles.length === 1);
             t.true(seenAppsWithToggles[0].appName === appName);
@@ -91,9 +90,7 @@ test('should return list of seen-toggles per app', t => {
 
 test('should return feature-toggles metrics even when there is nothing', t => {
     const { request } = getSetup();
-    return request
-        .get('/api/admin/metrics/feature-toggles')
-        .expect(200);
+    return request.get('/api/admin/metrics/feature-toggles').expect(200);
 });
 
 test('should return metrics for all toggles', t => {
@@ -115,7 +112,7 @@ test('should return metrics for all toggles', t => {
     return request
         .get('/api/admin/metrics/feature-toggles')
         .expect(200)
-        .expect((res) => {
+        .expect(res => {
             const metrics = res.body;
             t.true(metrics.lastHour !== undefined);
             t.true(metrics.lastMinute !== undefined);
@@ -127,7 +124,7 @@ test('should return list of client applications', t => {
     return request
         .get('/api/admin/metrics/applications')
         .expect(200)
-        .expect((res) => {
+        .expect(res => {
             t.true(res.body.applications.length === 0);
         });
 });

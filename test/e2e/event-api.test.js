@@ -8,19 +8,19 @@ test.beforeEach(() => {
     logger.setLevel('FATAL');
 });
 
-test.serial('returns events', async (t) => {
+test.serial('returns events', async () => {
     const { request, destroy } = await setupApp('event_api_serial');
     return request
-        .get('/api/events')
+        .get('/api/admin/events')
         .expect('Content-Type', /json/)
         .expect(200)
         .then(destroy);
 });
 
-test.serial('returns events given a name', async (t) => {
+test.serial('returns events given a name', async () => {
     const { request, destroy } = await setupApp('event_api_serial');
     return request
-        .get('/api/events/myname')
+        .get('/api/admin/events/myname')
         .expect('Content-Type', /json/)
         .expect(200)
         .then(destroy);

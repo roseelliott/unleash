@@ -3,12 +3,12 @@
 const { EventEmitter } = require('events');
 
 class FakeMetricsStore extends EventEmitter {
-    getMetricsLastHour () {
+    getMetricsLastHour() {
         return Promise.resolve([]);
     }
-    insert () {
+    insert() {
         return Promise.resolve();
-    } 
+    }
 }
 
 module.exports = FakeMetricsStore;

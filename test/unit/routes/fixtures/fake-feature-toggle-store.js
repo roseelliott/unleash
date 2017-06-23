@@ -1,10 +1,9 @@
 'use strict';
 
-
-module.exports =  () => {
+module.exports = () => {
     const _features = [];
     return {
-        getFeature: (name) => {
+        getFeature: name => {
             const toggle = _features.find(f => f.name === name);
             if (toggle) {
                 return Promise.resolve(toggle);
@@ -13,6 +12,6 @@ module.exports =  () => {
             }
         },
         getFeatures: () => Promise.resolve(_features),
-        addFeature: (feature) => _features.push(feature),
+        addFeature: feature => _features.push(feature),
     };
 };

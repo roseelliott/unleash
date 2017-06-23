@@ -7,8 +7,6 @@ const featureToggleStore = require('./fake-feature-toggle-store');
 const eventStore = require('./fake-event-store');
 const strategyStore = require('./fake-strategies-store');
 
-
-
 module.exports = {
     createStores: () => {
         const db = {

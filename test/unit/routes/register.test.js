@@ -13,7 +13,7 @@ test.beforeEach(() => {
     logger.setLevel('FATAL');
 });
 
-function getSetup () {
+function getSetup() {
     const stores = store.createStores();
     const app = getApp({
         baseUriPath: '',

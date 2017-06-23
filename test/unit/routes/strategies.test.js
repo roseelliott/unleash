@@ -9,7 +9,7 @@ const logger = require('../../../lib/logger');
 const { EventEmitter } = require('events');
 const eventBus = new EventEmitter();
 
-function getSetup () {
+function getSetup() {
     const base = `/random${Math.round(Math.random() * 1000)}`;
     const stores = store.createStores();
     const app = getApp({
@@ -36,7 +36,7 @@ test('should add version numbers for /stategies', t => {
         .get(`${base}/api/admin/strategies`)
         .expect('Content-Type', /json/)
         .expect(200)
-        .expect((res) => {
+        .expect(res => {
             t.true(res.body.version === 1);
         });
 });
@@ -48,7 +48,7 @@ test('should require a name when creating a new stratey', t => {
         .post(`${base}/api/admin/strategies`)
         .send({})
         .expect(400)
-        .expect((res) => {
+        .expect(res => {
             t.true(res.body.name === 'ValidationError');
         });
 });
@@ -60,7 +60,7 @@ test('should require parameters array when creating a new stratey', t => {
         .post(`${base}/api/admin/strategies`)
         .send({ name: 'TestStrat' })
         .expect(400)
-        .expect((res) => {
+        .expect(res => {
             t.true(res.body.name === 'ValidationError');
         });
 });
@@ -112,6 +112,6 @@ test('should validate format when updating strategy', () => {
 
     return request
         .put(`${base}/api/admin/strategies/${name}`)
-        .send({ })
+        .send({})
         .expect(400);
 });
