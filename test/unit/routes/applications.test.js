@@ -1,7 +1,6 @@
 'use strict';
 
 const { test } = require('ava');
-
 const store = require('./fixtures/store');
 const supertest = require('supertest');
 const logger = require('../../../lib/logger');
@@ -10,30 +9,31 @@ const getApp = require('../../../lib/app');
 const { EventEmitter } = require('events');
 const eventBus = new EventEmitter();
 
-function getSetup() {
-    const base = `/random${Math.round(Math.random() * 1000)}`;
-    const stores = store.createStores();
-    const app = getApp({
-        baseUriPath: base,
-        stores,
-        eventBus,
-    });
-
-    return { base, eventStore: stores.eventStore, request: supertest(app) };
-}
-
 test.beforeEach(() => {
     logger.setLevel('FATAL');
 });
 
-test('should get empty events list via admin', t => {
+function getSetup() {
+    const stores = store.createStores();
+    const app = getApp({
+        baseUriPath: '',
+        stores,
+        eventBus,
+    });
+
+    return {
+        request: supertest(app),
+        stores,
+    };
+}
+
+test('should return list of client applications', t => {
     t.plan(1);
-    const { request, base } = getSetup();
+    const { request } = getSetup();
     return request
-        .get(`${base}/api/admin/events`)
-        .expect('Content-Type', /json/)
+        .get('/api/admin/metrics/applications')
         .expect(200)
         .expect(res => {
-            t.true(res.body.events.length === 0);
+            t.true(res.body.applications.length === 0);
         });
 });

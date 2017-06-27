@@ -124,14 +124,3 @@ test('should return metrics for all toggles', t => {
             t.true(metrics.lastMinute !== undefined);
         });
 });
-
-test('should return list of client applications', t => {
-    t.plan(1);
-    const { request } = getSetup();
-    return request
-        .get('/api/admin/metrics/applications')
-        .expect(200)
-        .expect(res => {
-            t.true(res.body.applications.length === 0);
-        });
-});

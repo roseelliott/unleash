@@ -98,20 +98,17 @@ test('should require at least one strategy when creating a feature toggle', t =>
         .expect(400);
 });
 
-test.skip(
-    'should require at least one strategy when updating a feature toggle',
-    t => {
-        t.plan(0);
-        const { request, featureToggleStore, base } = getSetup();
-        featureToggleStore.addFeature({
-            name: 'ts',
-            strategies: [{ name: 'default' }],
-        });
+test('should require at least one strategy when updating a feature toggle', t => {
+    t.plan(0);
+    const { request, featureToggleStore, base } = getSetup();
+    featureToggleStore.addFeature({
+        name: 'ts',
+        strategies: [{ name: 'default' }],
+    });
 
-        return request
-            .put(`${base}/api/admin/features/ts`)
-            .send({ name: 'ts' })
-            .set('Content-Type', 'application/json')
-            .expect(400);
-    }
-);
+    return request
+        .put(`${base}/api/admin/features/ts`)
+        .send({ name: 'ts' })
+        .set('Content-Type', 'application/json')
+        .expect(400);
+});
