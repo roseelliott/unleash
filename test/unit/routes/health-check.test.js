@@ -29,6 +29,7 @@ function getSetup() {
 }
 
 test('should give 500 when db is failing', t => {
+    t.plan(2);
     const { request, db } = getSetup();
     db.select = () => ({
         from: () => Promise.reject(new Error('db error')),
@@ -39,12 +40,14 @@ test('should give 500 when db is failing', t => {
     });
 });
 
-test('should give 200 when db is not failing', () => {
+test('should give 200 when db is not failing', t => {
+    t.plan(0);
     const { request } = getSetup();
     return request.get('/health').expect(200);
 });
 
 test('should give health=GOOD when db is not failing', t => {
+    t.plan(2);
     const { request } = getSetup();
     return request.get('/health').expect(200).expect(res => {
         t.true(res.status === 200);

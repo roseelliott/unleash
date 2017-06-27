@@ -30,6 +30,7 @@ test.beforeEach(() => {
 });
 
 test('should add version numbers for /stategies', t => {
+    t.plan(1);
     const { request, base } = getSetup();
 
     return request
@@ -42,6 +43,7 @@ test('should add version numbers for /stategies', t => {
 });
 
 test('should require a name when creating a new stratey', t => {
+    t.plan(1);
     const { request, base } = getSetup();
 
     return request
@@ -54,6 +56,7 @@ test('should require a name when creating a new stratey', t => {
 });
 
 test('should require parameters array when creating a new stratey', t => {
+    t.plan(1);
     const { request, base } = getSetup();
 
     return request
@@ -65,7 +68,8 @@ test('should require parameters array when creating a new stratey', t => {
         });
 });
 
-test('should create a new stratey with empty parameters', () => {
+test('should create a new stratey with empty parameters', t => {
+    t.plan(0);
     const { request, base } = getSetup();
 
     return request
@@ -74,7 +78,8 @@ test('should create a new stratey with empty parameters', () => {
         .expect(201);
 });
 
-test('should not be possible to override name', () => {
+test('should not be possible to override name', t => {
+    t.plan(0);
     const { request, base, strategyStore } = getSetup();
     strategyStore.addStrategy({ name: 'Testing', parameters: [] });
 
@@ -84,7 +89,8 @@ test('should not be possible to override name', () => {
         .expect(403);
 });
 
-test('should update strategy', () => {
+test('should update strategy', t => {
+    t.plan(0);
     const name = 'AnotherStrat';
     const { request, base, strategyStore } = getSetup();
     strategyStore.addStrategy({ name, parameters: [] });
@@ -95,7 +101,8 @@ test('should update strategy', () => {
         .expect(200);
 });
 
-test('should not update uknown strategy', () => {
+test('should not update uknown strategy', t => {
+    t.plan(0);
     const name = 'UnknownStrat';
     const { request, base } = getSetup();
 
@@ -105,7 +112,8 @@ test('should not update uknown strategy', () => {
         .expect(404);
 });
 
-test('should validate format when updating strategy', () => {
+test('should validate format when updating strategy', t => {
+    t.plan(0);
     const name = 'AnotherStrat';
     const { request, base, strategyStore } = getSetup();
     strategyStore.addStrategy({ name, parameters: [] });

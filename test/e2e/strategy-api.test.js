@@ -9,6 +9,7 @@ test.beforeEach(() => {
 });
 
 test.serial('gets all strategies', async t => {
+    t.plan(1);
     const { request, destroy } = await setupApp('strategy_api_serial');
     return request
         .get('/api/admin/strategies')
@@ -24,6 +25,7 @@ test.serial('gets all strategies', async t => {
 });
 
 test.serial('gets a strategy by name', async t => {
+    t.plan(0);
     const { request, destroy } = await setupApp('strategy_api_serial');
     return request
         .get('/api/admin/strategies/default')
@@ -33,6 +35,7 @@ test.serial('gets a strategy by name', async t => {
 });
 
 test.serial('cant get a strategy by name that dose not exist', async t => {
+    t.plan(0);
     const { request, destroy } = await setupApp('strategy_api_serial');
     return request
         .get('/api/admin/strategies/mystrategy')
@@ -42,6 +45,7 @@ test.serial('cant get a strategy by name that dose not exist', async t => {
 });
 
 test.serial('creates a new strategy', async t => {
+    t.plan(0);
     const { request, destroy } = await setupApp('strategy_api_serial');
     return request
         .post('/api/admin/strategies')
@@ -56,6 +60,7 @@ test.serial('creates a new strategy', async t => {
 });
 
 test.serial('requires new strategies to have a name', async t => {
+    t.plan(0);
     const { request, destroy } = await setupApp('strategy_api_serial');
     return request
         .post('/api/admin/strategies')
@@ -66,6 +71,7 @@ test.serial('requires new strategies to have a name', async t => {
 });
 
 test.serial('refuses to create a strategy with an existing name', async t => {
+    t.plan(0);
     const { request, destroy } = await setupApp('strategy_api_serial');
     return request
         .post('/api/admin/strategies')
@@ -76,6 +82,7 @@ test.serial('refuses to create a strategy with an existing name', async t => {
 });
 
 test.serial('deletes a new strategy', async t => {
+    t.plan(0);
     const { request, destroy } = await setupApp('strategy_api_serial');
     return request
         .delete('/api/admin/strategies/usersWithEmail')
@@ -84,11 +91,16 @@ test.serial('deletes a new strategy', async t => {
 });
 
 test.serial("can't delete a strategy that dose not exist", async t => {
+    t.plan(0);
     const { request, destroy } = await setupApp('strategy_api_serial', false);
-    return request.delete('/api/admin/strategies/unknown').expect(404);
+    return request
+        .delete('/api/admin/strategies/unknown')
+        .expect(404)
+        .then(destroy);
 });
 
 test.serial('updates a exiting strategy', async t => {
+    t.plan(0);
     const { request, destroy } = await setupApp('strategy_api_serial');
     return request
         .put('/api/admin/strategies/default')
@@ -103,6 +115,7 @@ test.serial('updates a exiting strategy', async t => {
 });
 
 test.serial('cant update a unknown strategy', async t => {
+    t.plan(0);
     const { request, destroy } = await setupApp('strategy_api_serial');
     return request
         .put('/api/admin/strategies/unknown')

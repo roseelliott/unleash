@@ -27,7 +27,8 @@ function getSetup() {
     };
 }
 
-test('should register client', () => {
+test('should register client', t => {
+    t.plan(0);
     const { request } = getSetup();
     return request
         .post('/api/client/register')
@@ -41,12 +42,14 @@ test('should register client', () => {
         .expect(202);
 });
 
-test('should require appName field', () => {
+test('should require appName field', t => {
+    t.plan(0);
     const { request } = getSetup();
     return request.post('/api/client/register').expect(400);
 });
 
-test('should require strategies field', () => {
+test('should require strategies field', t => {
+    t.plan(0);
     const { request } = getSetup();
     return request
         .post('/api/client/register')

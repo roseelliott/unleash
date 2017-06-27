@@ -9,6 +9,7 @@ test.beforeEach(() => {
 });
 
 test.serial('should register client', async t => {
+    t.plan(0);
     const { request, destroy } = await setupApp('metrics_serial');
     return request
         .post('/api/client/register')
@@ -24,6 +25,7 @@ test.serial('should register client', async t => {
 });
 
 test.serial('should allow client to register multiple times', async t => {
+    t.plan(0);
     const { request, destroy } = await setupApp('metrics_serial');
     const clientRegistration = {
         appName: 'multipleRegistration',
@@ -47,6 +49,7 @@ test.serial('should allow client to register multiple times', async t => {
 });
 
 test.serial('should accept client metrics', async t => {
+    t.plan(0);
     const { request, destroy } = await setupApp('metrics_serial');
     return request
         .post('/api/client/metrics')
@@ -64,6 +67,7 @@ test.serial('should accept client metrics', async t => {
 });
 
 test.serial('should get application details', async t => {
+    t.plan(3);
     const { request, destroy } = await setupApp('metrics_serial');
     return request
         .get('/api/admin/metrics/applications/demo-app-1')
@@ -77,6 +81,7 @@ test.serial('should get application details', async t => {
 });
 
 test.serial('should get list of applications', async t => {
+    t.plan(2);
     const { request, destroy } = await setupApp('metrics_serial');
     return request
         .get('/api/admin/metrics/applications')

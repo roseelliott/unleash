@@ -27,7 +27,8 @@ function getSetup() {
     };
 }
 
-test('should validate client metrics', () => {
+test('should validate client metrics', t => {
+    t.plan(0);
     const { request } = getSetup();
     return request
         .post('/api/client/metrics')
@@ -35,7 +36,8 @@ test('should validate client metrics', () => {
         .expect(400);
 });
 
-test('should accept client metrics', () => {
+test('should accept client metrics', t => {
+    t.plan(0);
     const { request } = getSetup();
     return request
         .post('/api/client/metrics')
@@ -52,6 +54,7 @@ test('should accept client metrics', () => {
 });
 
 test('should return seen toggles even when there is nothing', t => {
+    t.plan(1);
     const { request } = getSetup();
     return request
         .get('/api/admin/metrics/seen-toggles')
@@ -62,6 +65,7 @@ test('should return seen toggles even when there is nothing', t => {
 });
 
 test('should return list of seen-toggles per app', t => {
+    t.plan(3);
     const { request, stores } = getSetup();
     const appName = 'asd!23';
     stores.clientMetricsStore.emit('metrics', {
@@ -89,11 +93,13 @@ test('should return list of seen-toggles per app', t => {
 });
 
 test('should return feature-toggles metrics even when there is nothing', t => {
+    t.plan(0);
     const { request } = getSetup();
     return request.get('/api/admin/metrics/feature-toggles').expect(200);
 });
 
 test('should return metrics for all toggles', t => {
+    t.plan(2);
     const { request, stores } = getSetup();
     const appName = 'asd!23';
     stores.clientMetricsStore.emit('metrics', {
@@ -120,6 +126,7 @@ test('should return metrics for all toggles', t => {
 });
 
 test('should return list of client applications', t => {
+    t.plan(1);
     const { request } = getSetup();
     return request
         .get('/api/admin/metrics/applications')

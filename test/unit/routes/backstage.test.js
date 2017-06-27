@@ -14,6 +14,7 @@ test.beforeEach(() => {
 });
 
 test('should use enable prometheus', t => {
+    t.plan(0);
     const stores = store.createStores();
     const app = getApp({
         baseUriPath: '',

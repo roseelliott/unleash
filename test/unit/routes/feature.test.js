@@ -30,6 +30,7 @@ function getSetup() {
 }
 
 test('should get empty getFeatures via admin', t => {
+    t.plan(1);
     const { request, base } = getSetup();
     return request
         .get(`${base}/api/admin/features`)
@@ -41,6 +42,7 @@ test('should get empty getFeatures via admin', t => {
 });
 
 test('should get empty getFeatures via client', t => {
+    t.plan(1);
     const { request, base } = getSetup();
     return request
         .get(`${base}/api/client/features`)
@@ -52,6 +54,7 @@ test('should get empty getFeatures via client', t => {
 });
 
 test('should get one getFeature', t => {
+    t.plan(1);
     const { request, featureToggleStore, base } = getSetup();
     featureToggleStore.addFeature({
         name: 'test_',
@@ -68,6 +71,7 @@ test('should get one getFeature', t => {
 });
 
 test('should add version numbers for /features', t => {
+    t.plan(1);
     const { request, featureToggleStore, base } = getSetup();
     featureToggleStore.addFeature({
         name: 'test2',
@@ -84,6 +88,7 @@ test('should add version numbers for /features', t => {
 });
 
 test('should require at least one strategy when creating a feature toggle', t => {
+    t.plan(0);
     const { request, base } = getSetup();
 
     return request
@@ -96,6 +101,7 @@ test('should require at least one strategy when creating a feature toggle', t =>
 test.skip(
     'should require at least one strategy when updating a feature toggle',
     t => {
+        t.plan(0);
         const { request, featureToggleStore, base } = getSetup();
         featureToggleStore.addFeature({
             name: 'ts',

@@ -9,6 +9,7 @@ test.beforeEach(() => {
 });
 
 test.serial('returns three archived toggles', async t => {
+    t.plan(1);
     const { request, destroy } = await setupApp('archive_serial');
     return request
         .get('/api/admin/archive/features')
@@ -21,6 +22,7 @@ test.serial('returns three archived toggles', async t => {
 });
 
 test.serial('revives a feature by name', async t => {
+    t.plan(0);
     const { request, destroy } = await setupApp('archive_serial');
     return request
         .post('/api/admin/archive/revive/featureArchivedX')
@@ -30,6 +32,7 @@ test.serial('revives a feature by name', async t => {
 });
 
 test.serial('must set name when reviving toggle', async t => {
+    t.plan(0);
     const { request, destroy } = await setupApp('archive_serial');
     return request.post('/api/admin/archive/revive/').expect(404).then(destroy);
 });

@@ -8,7 +8,8 @@ test.beforeEach(() => {
     logger.setLevel('FATAL');
 });
 
-test.serial('returns events', async () => {
+test.serial('returns events', async t => {
+    t.plan(0);
     const { request, destroy } = await setupApp('event_api_serial');
     return request
         .get('/api/admin/events')
@@ -17,7 +18,8 @@ test.serial('returns events', async () => {
         .then(destroy);
 });
 
-test.serial('returns events given a name', async () => {
+test.serial('returns events given a name', async t => {
+    t.plan(0);
     const { request, destroy } = await setupApp('event_api_serial');
     return request
         .get('/api/admin/events/myname')

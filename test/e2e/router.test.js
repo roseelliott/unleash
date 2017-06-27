@@ -9,6 +9,7 @@ test.beforeEach(() => {
 });
 
 test('returns health good', async t => {
+    t.plan(0);
     const { request, destroy } = await setupApp('health');
     return request
         .get('/health')

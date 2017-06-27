@@ -30,6 +30,7 @@ function getSetup() {
 }
 
 test('should get api defintion', t => {
+    t.plan(2);
     const { request, base } = getSetup();
     return request
         .get(`${base}/api/`)
@@ -42,6 +43,7 @@ test('should get api defintion', t => {
 });
 
 test('should get admin api defintion', t => {
+    t.plan(2);
     const { request, base } = getSetup();
     return request
         .get(`${base}/api/admin`)
@@ -56,6 +58,7 @@ test('should get admin api defintion', t => {
 });
 
 test('should get client api defintion', t => {
+    t.plan(2);
     const { request, base } = getSetup();
     return request
         .get(`${base}/api/client`)
